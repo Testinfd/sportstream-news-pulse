@@ -17,16 +17,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest # Or a specific version
+          node-version: '20.x' # Specify LTS Node.js version
+          cache: 'npm' # Cache npm dependencies
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: npm ci # Use npm ci for faster, reliable installs from package-lock.json
 
       - name: Build project
-        run: bun run build # Assumes your build script is 'build' in package.json
+        run: npm run build # Use npm to run the build script
         env:
           VITE_BASE_URL: /sportstream-news-pulse/ # Ensure Vite knows the base path during build
 
