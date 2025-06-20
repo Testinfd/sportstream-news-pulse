@@ -28,8 +28,8 @@ jobs:
 
       - name: Build project
         run: npm run build # Use npm to run the build script
-        env:
-          VITE_BASE_URL: /sportstream-news-pulse/ # Ensure Vite knows the base path during build
+        # env:
+          # VITE_BASE_URL: /sportstream-news-pulse/ # This is not strictly necessary if base is set in vite.config.ts
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
