@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/sportstream-news-pulse/", // Added for GitHub Pages deployment
+  base: "https://Testinfd.github.io/sportstream-news-pulse/.", // Added for GitHub Pages deployment
   server: {
     host: "::",
     port: 8080,
