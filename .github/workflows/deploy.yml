@@ -1,0 +1,45 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Or your default branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allow write to update gh-pages branch
+      pages: write    # Allow deploying to GitHub Pages
+      id-token: write # Allow OIDC token for passwordless deployment (optional, but good practice)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest # Or a specific version
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build project
+        run: bun run build # Assumes your build script is 'build' in package.json
+        env:
+          VITE_BASE_URL: /sportstream-news-pulse/ # Ensure Vite knows the base path during build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist # Standard output directory for Vite
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # No specific token needed if permissions are set correctly at job level
+        # and your repository settings allow GitHub Actions to create and deploy to Pages.
+        # If you have a custom domain, you might need to add a CNAME file to your public directory
+        # or configure it in the GitHub Pages settings.
+        # This action automatically deploys the artifact uploaded in the previous step.
